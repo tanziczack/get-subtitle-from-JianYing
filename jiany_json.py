@@ -114,7 +114,7 @@ def get_sub_jiany():
                 start.append(i['target_timerange']['start'])
                 duration.append(i['target_timerange']['duration'])
     except FileNotFoundError:
-        print("\n请将C:/Users/USER/AppData/Local/JianyingPro/User Data/Projects/com.lveditor.draft目录下的draft.json文件拷贝到当前目录！")
+        print("\n请将C:/Users/USER/AppData/Local/JianyingPro/User Data/Projects/com.lveditor.draft目录下的draft_content.json文件拷贝到当前目录！")
         return subtitle
 
     while ind < len(content):
@@ -136,7 +136,7 @@ def get_sub_jiany():
     return subtitle
 
 if __name__ == '__main__':
-    json_path = './draft.json'  #剪映产生的json文件
+    json_path = './draft_content.json'  #剪映产生的json文件
     jy_sub_path = './jianying_sub.srt'
     hsub_path = './hand_sub.txt' #脚本字幕
     sub_path = './sub.srt'       #打轴后的字幕
