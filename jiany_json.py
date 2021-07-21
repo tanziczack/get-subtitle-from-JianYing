@@ -1,5 +1,5 @@
 import json
-import time, srt, pinyin, re
+import time, srt, pinyin, re, os
 from fuzzywuzzy import fuzz
 
 def comp_sub(c, h):   #对比自动字幕和脚本字幕的匹配度，分数越高越匹配；c代表自动字幕，h代表脚本字幕
@@ -114,7 +114,7 @@ def get_sub_jiany():
                 start.append(i['target_timerange']['start'])
                 duration.append(i['target_timerange']['duration'])
     except FileNotFoundError:
-        print("\n请将C:/Users/USER/AppData/Local/JianyingPro/User Data/Projects/com.lveditor.draft目录下的draft_content.json文件拷贝到当前目录！")
+        print("\n请将C:/Users/USER/AppData/Local/JianyingPro/User Data/Projects/com.lveditor.draft目录下的json文件拷贝到当前目录！")
         return subtitle
 
     while ind < len(content):
@@ -136,14 +136,18 @@ def get_sub_jiany():
     return subtitle
 
 if __name__ == '__main__':
-    json_path = './draft_content.json'  #剪映产生的json文件
-    jy_sub_path = './jianying_sub.srt'
-    hsub_path = './hand_sub.txt' #脚本字幕
-    sub_path = './sub.srt'       #打轴后的字幕
+    jy_sub_path = './jianying_sub.srt'  #导出的剪映字幕
+    hsub_path = './hand_sub.txt'   #准备的脚本字幕
+    sub_path = './sub.srt'       #打轴后产生的字幕
     score_1 = 95  #第一次匹配的分数；分数越高对匹配度要求越高
     score_2 = 0  #结合下一行字幕一起匹配的分数；
     af_sub_c = ""   #预处理过的自动字幕字符串
     af_sub_h = ""   #预处理过的脚本字幕字符串
+
+    fl = os.listdir('./')
+    for filename in fl:
+        if filename.endswith('.json'):
+            json_path=filename   #获取当前目录下剪映产生的json文件（老版的剪映生产的是draft.json,新版的剪映产生的是draft_content.json，内容一样只是名字不同）
 
     subsc = get_sub_jiany()  # 获取剪映字幕
     if len(subsc) > 0:
